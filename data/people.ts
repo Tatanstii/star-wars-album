@@ -7,7 +7,7 @@ export const getPeople = async () => {
   return response;
 };
 
-export const getPerson = async (id: string) => {
+export const getCharacter = async (id: number) => {
   const response = await providerRequest(`${ENDPOINT}/${id}`);
   return response;
 };

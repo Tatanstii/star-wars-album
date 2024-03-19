@@ -7,7 +7,7 @@ export const getStarships = async () => {
   return response;
 };
 
-export const getStarship = async (id: string) => {
+export const getStarship = async (id: number) => {
   const response = await providerRequest(`${ENDPOINT}/${id}`);
   return response;
 };

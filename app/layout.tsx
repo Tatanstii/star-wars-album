@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import { Lato } from 'next/font/google';
 import favicon from '@/public/assets/images/favicon/favicon.ico';
 import { cn } from '@/lib/utils';
+import { Toaster } from '@/components/ui/toaster';
 
 const lato = Lato({ subsets: ['latin'], weight: '400' });
 
@@ -34,7 +35,8 @@ export default function RootLayout({
       <body
         className={cn(lato.className, Starjedi.variable, Starjhol.variable)}
       >
-        {children}
+        <main>{children}</main>
+        <Toaster />
       </body>
     </html>
   );

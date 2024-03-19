@@ -1,15 +1,17 @@
 import React from 'react';
 import StickersPackStock from './components/stack';
-import { getStickerPackRules } from '@/actions/get-sticker-pack-rules';
+import getStickerPackRules from '@/actions/get-sticker-pack-rules';
+import NewStickerPack from '@/components/new-sticker-pack';
 
 export default async function GetStickersPage() {
   const stickerPackRules = await getStickerPackRules();
 
   return (
-    <main className='md:h-[calc(100dvh - 64px)]'>
-      <section className='h-full'>
+    <>
+      <section className='md:h-[calc(100dvh - 64px)]'>
         <StickersPackStock rules={stickerPackRules} />
       </section>
-    </main>
+      <NewStickerPack />
+    </>
   );
 }

@@ -1,3 +1,9 @@
+export enum Category {
+  FILM = 'film',
+  CHARACTER = 'character',
+  STARSHIP = 'starship',
+}
+
 export type Starship = {
   name: string;
   model: string;
