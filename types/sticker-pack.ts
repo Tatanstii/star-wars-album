@@ -1,8 +1,8 @@
 import { Category, Character, Film, Starship } from './album';
 
-export enum StickerPackType {
-  SPECIAL = 'special',
-  REGULAR = 'regular',
+export enum StickerType {
+  SPECIAL = 'Especial',
+  REGULAR = 'Regular',
 }
 
 export type StickerPackRule =
@@ -16,25 +16,29 @@ export type StickerPackRule =
       starships: 2;
     };
 
-export type Sticker =
-  | {
-      type: StickerPackType.SPECIAL | StickerPackType.REGULAR;
-      category: Category.FILM;
-      content: Film;
-    }
-  | {
-      type: StickerPackType.SPECIAL | StickerPackType.REGULAR;
-      category: Category.CHARACTER;
-      content: Character;
-    }
-  | {
-      type: StickerPackType.SPECIAL | StickerPackType.REGULAR;
-      category: Category.STARSHIP;
-      content: Starship;
-    };
+export type FilmSticker = {
+  id: number;
+  type: StickerType.SPECIAL | StickerType.REGULAR;
+  category: Category.FILM;
+  content: Film;
+};
+
+export type CharacterSticker = {
+  id: number;
+  type: StickerType.SPECIAL | StickerType.REGULAR;
+  category: Category.CHARACTER;
+  content: Character;
+};
+
+export type StarshipSticker = {
+  id: number;
+  type: StickerType.SPECIAL | StickerType.REGULAR;
+  category: Category.STARSHIP;
+  content: Starship;
+};
 
 export type StickerPack = {
-  films: Sticker[];
-  characters: Sticker[];
-  starships: Sticker[];
+  films: FilmSticker[];
+  characters: CharacterSticker[];
+  starships: StarshipSticker[];
 };

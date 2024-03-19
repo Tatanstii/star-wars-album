@@ -7,7 +7,7 @@ import { useStickerPack } from '@/store/sticker-pack';
 import type { StickerPackRule } from '@/types/sticker-pack';
 import { lazy, startTransition, Suspense } from 'react';
 
-const StickerPack = lazy(() => import('./stickers-pack'));
+const StickerPack = lazy(() => import('./sticker-pack'));
 
 type Props = {
   rules: StickerPackRule[];
@@ -22,6 +22,7 @@ export default function StickersPackStock({ rules }: Props) {
   const handleOnClick = async (rule: StickerPackRule) => {
     const response = await getNewStickerPack(rule);
 
+    console.log('response', response);
     if (response.error) {
       toast({
         variant: 'destructive',

@@ -9,7 +9,7 @@ type Props = {
   onClick: (rule: StickerPackRule) => void;
 };
 
-export default function StickersPack({
+export default function StickerPack({
   rule,
   isOpen,
   isLocked,
@@ -20,7 +20,9 @@ export default function StickersPack({
   };
 
   if (isLocked) {
-    return <div className='h-[400px] w-full max-w-lg rounded-md bg-gradient-to-b from-gray-600 to-primary'></div>;
+    return (
+      <div className='h-[400px] w-full max-w-lg rounded-md bg-gradient-to-b from-gray-600 to-primary'></div>
+    );
   }
 
   if (isOpen) {

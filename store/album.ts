@@ -1,37 +1,44 @@
-import { Album, Character, Film, Starship } from '@/types/album';
+import { Album, Category, Character, Film, Starship } from '@/types/album';
+import {
+  CharacterSticker,
+  FilmSticker,
+  StarshipSticker,
+} from '@/types/sticker-pack';
 import { create } from 'zustand';
 
 type State = Album;
 
-type Action =
-  | {
-      type: 'SET_CHARACTERS';
-      payload: Character[];
-    }
-  | {
-      type: 'SET_STARSHIPS';
-      payload: Starship[];
-    }
-  | {
-      type: 'SET_FILMS';
-      payload: Film[];
-    };
+type Action = {
+  addSticker: (
+    sticker: FilmSticker | CharacterSticker | StarshipSticker,
+    category: Category
+  ) => void;
+};
 
-export const useAlbum = create<State>((set) => ({
+export const useAlbum = create<State & Action>((set) => ({
   characters: [],
   starships: [],
   films: [],
-  dispatch: (action: Action) => {
-    switch (action.type) {
-      case 'SET_CHARACTERS':
-        set({ characters: action.payload });
-        break;
-      case 'SET_STARSHIPS':
-        set({ starships: action.payload });
-        break;
-      case 'SET_FILMS':
-        set({ films: action.payload });
-        break;
-    }
-  },
+  addSticker: (sticker, category) =>
+    set((state) => {
+      if (category === Category.CHARACTER) {
+        return {
+          ...state,
+          characters: [...state.characters, sticker as CharacterSticker],
+        };
+      }
+      if (category === Category.FILM) {
+        return {
+          ...state,
+          films: [...state.films, sticker as FilmSticker],
+        };
+      }
+      if (category === Category.STARSHIP) {
+        return {
+          ...state,
+          starships: [...state.starships, sticker as StarshipSticker],
+        };
+      }
+      return state;
+    }),
 }));

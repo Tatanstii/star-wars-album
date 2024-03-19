@@ -1,7 +1,9 @@
+import { CharacterSticker, FilmSticker, StarshipSticker } from './sticker-pack';
+
 export enum Category {
-  FILM = 'film',
-  CHARACTER = 'character',
-  STARSHIP = 'starship',
+  FILM = 'Pelicula',
+  CHARACTER = 'Personaje',
+  STARSHIP = 'Nave',
 }
 
 export type Starship = {
@@ -62,7 +64,7 @@ export type Film = {
 };
 
 export type Album = {
-  characters: Character[];
-  starships: Starship[];
-  films: Film[];
+  characters: CharacterSticker[];
+  starships: StarshipSticker[];
+  films: FilmSticker[];
 };

@@ -10,19 +10,21 @@ import {
 import { checkIsSpecialStickerPack, getRandomInt } from '@/lib/utils';
 import { Category } from '@/types/album';
 import {
-  Sticker,
+  CharacterSticker,
+  FilmSticker,
+  StarshipSticker,
   StickerPack,
   StickerPackRule,
-  StickerPackType,
+  StickerType,
 } from '@/types/sticker-pack';
 
 const ERROR_MESSAGE = 'Error al obtener el paquete de stickers';
 
 export default async function getNewStickerPack(rule: StickerPackRule) {
   try {
-    let films: Sticker[] = [];
-    let characters: Sticker[] = [];
-    let starships: Sticker[] = [];
+    let films: FilmSticker[] = [];
+    let characters: CharacterSticker[] = [];
+    let starships: StarshipSticker[] = [];
 
     if ('films' in rule && typeof rule.films === 'number') {
       const randomFilmId = getRandomInt(1, MAX_FILMS_LENGTH);
@@ -31,9 +33,10 @@ export default async function getNewStickerPack(rule: StickerPackRule) {
       films = [
         ...films,
         {
+          id: randomFilmId,
           type: checkIsSpecialStickerPack(randomFilmId, Category.FILM)
-            ? StickerPackType.SPECIAL
-            : StickerPackType.REGULAR,
+            ? StickerType.SPECIAL
+            : StickerType.REGULAR,
           category: Category.FILM,
           content: film,
         },
@@ -47,9 +50,10 @@ export default async function getNewStickerPack(rule: StickerPackRule) {
       characters = [
         ...characters,
         {
+          id: randomCharacterId,
           type: checkIsSpecialStickerPack(randomCharacterId, Category.CHARACTER)
-            ? StickerPackType.SPECIAL
-            : StickerPackType.REGULAR,
+            ? StickerType.SPECIAL
+            : StickerType.REGULAR,
           category: Category.CHARACTER,
           content: character,
         },
@@ -63,9 +67,10 @@ export default async function getNewStickerPack(rule: StickerPackRule) {
       starships = [
         ...starships,
         {
+          id: randomStarshipId,
           type: checkIsSpecialStickerPack(randomStarshipId, Category.STARSHIP)
-            ? StickerPackType.SPECIAL
-            : StickerPackType.REGULAR,
+            ? StickerType.SPECIAL
+            : StickerType.REGULAR,
           category: Category.STARSHIP,
           content: starship,
         },
@@ -80,6 +85,8 @@ export default async function getNewStickerPack(rule: StickerPackRule) {
       } as StickerPack,
     };
   } catch (error) {
+    console.log(error);
+
     return {
       error: ERROR_MESSAGE,
     };

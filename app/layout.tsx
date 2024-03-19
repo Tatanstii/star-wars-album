@@ -35,7 +35,7 @@ export default function RootLayout({
       <body
         className={cn(lato.className, Starjedi.variable, Starjhol.variable)}
       >
-        <main>{children}</main>
+        {children}
         <Toaster />
       </body>
     </html>
