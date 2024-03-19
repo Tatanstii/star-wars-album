@@ -1,4 +1,4 @@
-export type StickersPackRule =
+export type StickerPackRule =
   | {
       films: 1;
       characters: 3;

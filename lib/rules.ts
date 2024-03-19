@@ -1,6 +1,6 @@
-import { StickersPackRule } from '@/types/rules';
+import type { StickerPackRule } from '@/types/sticker-pack';
 
-export const stickersPackRules: StickersPackRule[] = [
+export const stickersPackRules: StickerPackRule[] = [
   {
     films: 1,
     characters: 3,
