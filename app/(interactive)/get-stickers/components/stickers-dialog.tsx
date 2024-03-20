@@ -90,8 +90,18 @@ export default function StickersDialog() {
                     stickerCategory={character.category}
                     stickerNumber={character.id}
                     title={character.content.name}
-                    alreadyExist={checkExistSticker(character, album)}
-                    onClick={handleOnClick}
+                    actionText={
+                      checkExistSticker(character, album)
+                        ? 'Descartar'
+                        : 'Agregar al album'
+                    }
+                    onClick={() =>
+                      handleOnClick(
+                        character.id,
+                        character.category,
+                        checkExistSticker(character, album)
+                      )
+                    }
                   />
                 </div>
               ))}
@@ -108,8 +118,18 @@ export default function StickersDialog() {
                     stickerCategory={film.category}
                     stickerNumber={film.id}
                     title={film.content.title}
-                    alreadyExist={checkExistSticker(film, album)}
-                    onClick={handleOnClick}
+                    actionText={
+                      checkExistSticker(film, album)
+                        ? 'Descartar'
+                        : 'Agregar al album'
+                    }
+                    onClick={() =>
+                      handleOnClick(
+                        film.id,
+                        film.category,
+                        checkExistSticker(film, album)
+                      )
+                    }
                   />
                 </div>
               ))}
@@ -126,8 +146,18 @@ export default function StickersDialog() {
                     stickerCategory={starship.category}
                     stickerNumber={starship.id}
                     title={starship.content.name}
-                    alreadyExist={checkExistSticker(starship, album)}
-                    onClick={handleOnClick}
+                    actionText={
+                      checkExistSticker(starship, album)
+                        ? 'Descartar'
+                        : 'Agregar al album'
+                    }
+                    onClick={() =>
+                      handleOnClick(
+                        starship.id,
+                        starship.category,
+                        checkExistSticker(starship, album)
+                      )
+                    }
                   />
                 </div>
               ))}

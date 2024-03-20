@@ -1,6 +1,6 @@
 'use client';
 
-import { navigationItems } from '@/data/navigation-items';
+import { homeNavItems } from '@/data/nav';
 import { cn, formatMsToMinutes } from '@/lib/utils';
 import { useStickerPack } from '@/store/sticker-pack-settings';
 import Link from 'next/link';
@@ -14,14 +14,17 @@ export default function Navbar() {
     <nav>
       <div className='flex flex-row justify-between rounded-md border border-primary p-5'>
         <ul className='flex flex-col gap-5 md:flex-row'>
-          {navigationItems.map((item, index) => (
+          {homeNavItems.map((item, index) => (
             <li key={item.link}>
               <Link
                 href={item.link}
                 className={cn(
                   'flex flex-row items-center transition hover:text-primary',
                   {
-                    'text-primary': pathname === item.link,
+                    'text-primary':
+                      item.link !== '/'
+                        ? pathname.includes(item.link)
+                        : pathname === item.link,
                   }
                 )}
               >

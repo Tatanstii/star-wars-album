@@ -10,23 +10,22 @@ type Props = {
   stickerCategory: Category;
   stickerNumber: number;
   title: string;
-  alreadyExist: boolean;
-  onClick?: (id: number, category: Category, alreadyExist: boolean) => void;
+  actionText?: string;
+  onClick?: () => void;
 };
 
 export default function Sticker({
-  id,
   stickerType,
   stickerCategory,
   stickerNumber,
   title,
-  alreadyExist,
+  actionText,
   onClick,
 }: Props) {
   return (
     <article
       className={cn(
-        'relative flex h-full max-h-[500px] min-h-[400px] w-[400px] flex-col rounded-md bg-slate-800',
+        'relative flex h-full max-h-[500px] min-h-[400px] w-full max-w-[400px] flex-col rounded-md bg-slate-800',
         {
           'bg-rose-800': stickerType === StickerType.SPECIAL,
         }
@@ -47,6 +46,20 @@ export default function Sticker({
         </div>
       </header>
       <div className={cn('relative flex h-full flex-col justify-between p-5')}>
+        <div className='flex w-full justify-end'>
+          <div
+            className={cn(
+              'z-20 flex w-fit rounded-md px-5 py-2 text-center font-bold uppercase',
+              {
+                'text-primary ring ring-primary':
+                  stickerType === StickerType.SPECIAL,
+                'bg-slate-900': stickerType === StickerType.REGULAR,
+              }
+            )}
+          >
+            {stickerType}
+          </div>
+        </div>
         <div className='z-20 grid h-full w-full place-items-center font-starjedi text-3xl'>
           {title}
         </div>
@@ -61,27 +74,18 @@ export default function Sticker({
             <GiFilmSpool size={300} className='text-slate-900' />
           )}
         </span>
-        <div className='z-30 flex w-full flex-row justify-between'>
-          <div
-            className={cn(
-              'w-fit rotate-6 rounded-md px-5 py-2 font-bold uppercase',
-              {
-                'bg-primary text-secondary-foreground':
-                  stickerType === StickerType.SPECIAL,
-                'bg-slate-900': stickerType === StickerType.REGULAR,
-              }
-            )}
-          >
-            {stickerType}
+        {actionText && onClick && (
+          <div className='z-30 flex w-full flex-row'>
+            <Button
+              type='button'
+              className='text-lg text-secondary-foreground w-full'
+              size="lg"
+              onClick={onClick}
+            >
+              {actionText}
+            </Button>
           </div>
-          <Button
-            type='button'
-            className='text-lg text-secondary-foreground'
-            onClick={() => onClick && onClick(id, stickerCategory, alreadyExist)}
-          >
-            {alreadyExist ? 'Descartar' : 'Agregar al album'}
-          </Button>
-        </div>
+        )}
       </div>
     </article>
   );

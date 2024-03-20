@@ -1,7 +1,5 @@
-import React from 'react'
+import { redirect } from 'next/navigation';
 
-export default function AlbumPage() {
-  return (
-    <div>AlbumPage</div>
-  )
+export default async function AlbumPage() {
+  await redirect('/album/films');
 }

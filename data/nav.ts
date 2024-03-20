@@ -2,7 +2,7 @@ import { BiSolidPhotoAlbum } from 'react-icons/bi';
 import { FaHome } from 'react-icons/fa';
 import { TbCardsFilled } from 'react-icons/tb';
 
-export const navigationItems = [
+export const homeNavItems = [
   {
     title: 'Inicio',
     icon: FaHome,
@@ -17,5 +17,20 @@ export const navigationItems = [
     title: 'Mi álbum',
     icon: BiSolidPhotoAlbum,
     link: '/album',
+  },
+];
+
+export const albumNavItems = [
+  {
+    title: 'Peliculas',
+    link: '/album/films',
+  },
+  {
+    title: 'Personajes',
+    link: '/album/characters',
+  },
+  {
+    title: 'Naves',
+    link: '/album/starships',
   },
 ];

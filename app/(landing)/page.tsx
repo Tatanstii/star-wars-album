@@ -1,9 +1,9 @@
 'use client';
 
-import { navigationItems } from '@/data/navigation-items';
+import { homeNavItems } from '@/data/nav';
 import NavigationButton from './components/navigation-button';
 
-const menuItems = navigationItems.filter((item) => item.title !== 'Inicio');
+const menuItems = homeNavItems.filter((item) => item.title !== 'Inicio');
 
 export default function Home() {
   return (

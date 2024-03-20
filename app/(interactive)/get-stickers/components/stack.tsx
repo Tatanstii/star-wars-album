@@ -44,13 +44,15 @@ export default function StickersPackStock({ rules }: Props) {
       setAll(response.data);
       addOpenStickerPack(index);
       lock();
-      setTimer(TIMER_TIME);
+      if (stickerPackOpen.length != MAX_STICKERS_PACK) {
+        setTimer(TIMER_TIME);
+      }
     }
   };
 
   useEffect(() => {
     if (timer != 0 && stickerPackOpen.length != MAX_STICKERS_PACK) {
-      let interval = setInterval(() => {
+      const interval = setInterval(() => {
         if (timer <= 0) {
           unlock();
           setTimer(0);
