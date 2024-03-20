@@ -14,9 +14,8 @@ import { GiAlienBug, GiFilmSpool, GiSpaceShuttle } from 'react-icons/gi';
 
 export default function StickerDetails() {
   const { sticker, removeSticker } = useStickerDetails((state) => state);
+  
   if (!sticker) return null;
-
-  console.log(sticker);
 
   return (
     <div className='fixed inset-0 z-50 h-full w-full bg-black/80'>

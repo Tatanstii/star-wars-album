@@ -10,5 +10,5 @@ export const getFilms = async (): Promise<Film[]> => {
 
 export const getFilm = async (id: number): Promise<Film> => {
   const response = await providerRequest(`${ENDPOINT}/${id}`);
-  return response.results;
+  return response;
 };

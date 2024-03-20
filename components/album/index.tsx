@@ -17,6 +17,7 @@ import { lazy, Suspense } from 'react';
 import { getFilm } from '@/data/films';
 import { getCharacter } from '@/data/people';
 import { getStarship } from '@/data/starships';
+import { useToast } from '../ui/use-toast';
 
 const Sticker = lazy(() => import('@/components/sticker'));
 const Placeholder = lazy(() => import('@/components/album/placeholder'));
@@ -28,12 +29,21 @@ type Props = {
 
 export default function Album({ items, placeholderItems }: Props) {
   const { setSticker } = useStickerDetails((state) => state);
+  const { toast } = useToast();
 
   const handleOnClick = async (
     sticker: CharacterSticker | FilmSticker | StarshipSticker
   ) => {
     if (sticker.category == Category.FILM) {
       const data = await getFilm(sticker.id);
+      if (!data) {
+        toast({
+          title: 'Error',
+          description: 'No se pudo obtener la información de la película',
+          variant: 'destructive',
+        });
+        return;
+      }
       setSticker({
         ...sticker,
         content: data,
@@ -41,6 +51,14 @@ export default function Album({ items, placeholderItems }: Props) {
     }
     if (sticker.category == Category.CHARACTER) {
       const data = await getCharacter(sticker.id);
+      if (!data) {
+        toast({
+          title: 'Error',
+          description: 'No se pudo obtener la información del personaje',
+          variant: 'destructive',
+        });
+        return;
+      }
       setSticker({
         ...sticker,
         content: data,
@@ -48,6 +66,14 @@ export default function Album({ items, placeholderItems }: Props) {
     }
     if (sticker.category == Category.STARSHIP) {
       const data = await getStarship(sticker.id);
+      if (!data) {
+        toast({
+          title: 'Error',
+          description: 'No se pudo obtener la información de la nave',
+          variant: 'destructive',
+        });
+        return;
+      }
       setSticker({
         ...sticker,
         content: data,
