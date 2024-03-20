@@ -22,9 +22,7 @@ const isEmptyStickerPack = (stickerPack: StickerPack) => {
 export default function StickersDialog() {
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const { stickerPack, remove, removeAll } = useRecentStickerPack(
-    (state) => state
-  );
+  const { stickerPack, remove } = useRecentStickerPack((state) => state);
   const { album, addSticker } = useAlbum((state) => state);
 
   useEffect(() => {
@@ -45,30 +43,31 @@ export default function StickersDialog() {
     category: Category,
     alreadyExist: boolean
   ) => {
-    if (alreadyExist) return await remove(id, category);
-    if (category === Category.CHARACTER) {
-      const sticker = stickerPack.characters.find(
-        (character) => character.id === id
-      );
-      if (sticker) {
-        await addSticker(sticker, category);
+    if (!alreadyExist) {
+      if (category === Category.CHARACTER) {
+        const sticker = stickerPack.characters.find(
+          (character) => character.id === id
+        );
+        if (sticker) {
+          await addSticker(sticker, category);
+        }
+      }
+      if (category === Category.FILM) {
+        const sticker = stickerPack.films.find((film) => film.id === id);
+        if (sticker) {
+          await addSticker(sticker, category);
+        }
+      }
+      if (category === Category.STARSHIP) {
+        const sticker = stickerPack.starships.find(
+          (starship) => starship.id === id
+        );
+        if (sticker) {
+          await addSticker(sticker, category);
+        }
       }
     }
-    if (category === Category.FILM) {
-      const sticker = stickerPack.films.find((film) => film.id === id);
-      if (sticker) {
-        await addSticker(sticker, category);
-      }
-    }
-    if (category === Category.STARSHIP) {
-      const sticker = stickerPack.starships.find(
-        (starship) => starship.id === id
-      );
-      if (sticker) {
-        await addSticker(sticker, category);
-      }
-    }
-    await removeAll();
+    await remove(id, category);
   };
 
   return (

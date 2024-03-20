@@ -56,3 +56,9 @@ export const extractIdFormUrl = (url: string) => {
   const match = url.match(EXTRACT_ID_REGEX);
   return match ? Number(match[1]) : null;
 };
+
+export const formatMsToMinutes = (ms: number) => {
+  const minutes = Math.floor(ms / 60000);
+  const seconds = ((ms % 60000) / 1000).toFixed(0);
+  return `${minutes}:${Number(seconds) < 10 ? '0' : ''}${seconds}`;
+};

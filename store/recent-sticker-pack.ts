@@ -16,57 +16,56 @@ type Action = {
 };
 
 export const useRecentStickerPack = create<State & Action>()(
-  (set) => ({
-    stickerPack: {
-      characters: [],
-      films: [],
-      starships: [],
-    },
-    setAll: (stickerPack) => set({ stickerPack }),
-    remove: (id, category) =>
-      set((state) => {
-        if (category === Category.CHARACTER) {
-          return {
-            ...state,
-            stickerPack: {
-              ...state.stickerPack,
-              characters: state.stickerPack.characters.filter(
-                (character) => character.id !== id
-              ),
-            },
-          };
-        }
-        if (category === Category.FILM) {
-          return {
-            ...state,
-            stickerPack: {
-              ...state.stickerPack,
-              films: state.stickerPack.films.filter((film) => film.id !== id),
-            },
-          };
-        }
-        if (category === Category.STARSHIP) {
-          return {
-            ...state,
-            stickerPack: {
-              ...state.stickerPack,
-              starships: state.stickerPack.starships.filter(
-                (starship) => starship.id !== id
-              ),
-            },
-          };
-        }
+  persist(
+    (set) => ({
+      stickerPack: {
+        characters: [],
+        films: [],
+        starships: [],
+      },
+      setAll: (stickerPack) => set({ stickerPack }),
+      remove: (id, category) =>
+        set((state) => {
+          if (category === Category.CHARACTER) {
+            return {
+              ...state,
+              stickerPack: {
+                ...state.stickerPack,
+                characters: state.stickerPack.characters.filter(
+                  (character) => character.id !== id
+                ),
+              },
+            };
+          }
+          if (category === Category.FILM) {
+            return {
+              ...state,
+              stickerPack: {
+                ...state.stickerPack,
+                films: state.stickerPack.films.filter((film) => film.id !== id),
+              },
+            };
+          }
+          if (category === Category.STARSHIP) {
+            return {
+              ...state,
+              stickerPack: {
+                ...state.stickerPack,
+                starships: state.stickerPack.starships.filter(
+                  (starship) => starship.id !== id
+                ),
+              },
+            };
+          }
 
-        return state;
-      }),
-    removeAll: () =>
-      set({ stickerPack: { characters: [], films: [], starships: [] } }),
-  })
-  // persist(
-  //  ,
-  //   {
-  //     name: 'recentStickerPack',
-  //     storage: createJSONStorage(() => localStorage),
-  //   }
-  // )
+          return state;
+        }),
+      removeAll: () =>
+        set({ stickerPack: { characters: [], films: [], starships: [] } }),
+    }),
+    {
+      name: 'recentStickerPack',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
 );

@@ -33,22 +33,34 @@ export const useAlbum = create<State & Action>()(
           if (category === Category.CHARACTER) {
             return {
               ...state,
-              characters: [
-                ...state.album.characters,
-                sticker as CharacterSticker,
-              ],
+              album: {
+                ...state.album,
+                characters: [
+                  ...state.album.characters,
+                  sticker as CharacterSticker,
+                ],
+              },
             };
           }
           if (category === Category.FILM) {
             return {
               ...state,
-              films: [...state.album.films, sticker as FilmSticker],
+              album: {
+                ...state.album,
+                films: [...state.album.films, sticker as FilmSticker],
+              },
             };
           }
           if (category === Category.STARSHIP) {
             return {
               ...state,
-              starships: [...state.album.starships, sticker as StarshipSticker],
+              album: {
+                ...state.album,
+                starships: [
+                  ...state.album.starships,
+                  sticker as StarshipSticker,
+                ],
+              },
             };
           }
           return state;

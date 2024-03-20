@@ -1,17 +1,21 @@
+import { BiSolidPhotoAlbum } from "react-icons/bi";
+import { FaHome } from "react-icons/fa";
+import { TbCardsFilled } from "react-icons/tb";
+
 export const navigationItems = [
   {
     title: 'Inicio',
-    icon: '🏠',
+    icon: FaHome,
     link: '/',
   },
   {
     title: 'Obtener láminas',
-    icon: '📦',
+    icon: TbCardsFilled,
     link: '/get-stickers',
   },
   {
     title: 'Mi álbum',
-    icon: '📚',
+    icon: BiSolidPhotoAlbum,
     link: '/album',
   },
 ];

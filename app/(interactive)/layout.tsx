@@ -9,7 +9,7 @@ export default function InteractiveLayot({
       <header>
         <Navbar />
       </header>
-      <main>{children}</main>
+      <main className='mt-10'>{children}</main>
     </div>
   );
 }
