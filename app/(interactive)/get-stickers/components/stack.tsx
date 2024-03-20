@@ -8,6 +8,7 @@ import type { StickerPackRule } from '@/types/sticker-pack';
 import { useEffect } from 'react';
 import StickerPack from './sticker-pack';
 import { MAX_STICKERS_PACK } from '@/lib/const';
+import { nanoid } from 'nanoid';
 
 type Props = {
   rules: StickerPackRule[];
@@ -53,6 +54,7 @@ export default function StickersPackStock({ rules }: Props) {
   useEffect(() => {
     if (timer != 0 && stickerPackOpen.length != MAX_STICKERS_PACK) {
       const interval = setInterval(() => {
+        console.log('timer', timer);
         if (timer <= 0) {
           unlock();
           setTimer(0);
@@ -62,7 +64,8 @@ export default function StickersPackStock({ rules }: Props) {
       }, INTERVAL_TIME);
       return () => clearInterval(interval);
     }
-  }, [timer, setTimer, unlock, stickerPackOpen.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timer, stickerPackOpen.length]);
 
   useEffect(() => {
     if (timer === 0) {

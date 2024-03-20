@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from '@/lib/utils';
 import { Category } from '@/types/album';
 import { StickerType } from '@/types/sticker-pack';
@@ -23,7 +25,7 @@ export default function Sticker({
   onClick,
 }: Props) {
   return (
-    <article
+    <div
       className={cn(
         'relative flex h-full max-h-[500px] min-h-[400px] w-full max-w-[400px] flex-col rounded-md bg-slate-800',
         {
@@ -31,7 +33,7 @@ export default function Sticker({
         }
       )}
     >
-      <header
+      <div
         className={cn(
           'flex items-center justify-between rounded-t-md bg-slate-900 p-4',
           { 'bg-rose-900': stickerType === StickerType.SPECIAL }
@@ -44,7 +46,7 @@ export default function Sticker({
             {stickerNumber}
           </p>
         </div>
-      </header>
+      </div>
       <div className={cn('relative flex h-full flex-col justify-between p-5')}>
         <div className='flex w-full justify-end'>
           <div
@@ -74,19 +76,19 @@ export default function Sticker({
             <GiFilmSpool size={300} className='text-slate-900' />
           )}
         </span>
-        {actionText && onClick && (
-          <div className='z-30 flex w-full flex-row'>
+        <div className='z-30 flex w-full flex-row'>
+          {actionText && onClick && (
             <Button
               type='button'
-              className='text-lg text-secondary-foreground w-full'
-              size="lg"
+              className='w-full text-lg text-secondary-foreground'
+              size='lg'
               onClick={onClick}
             >
               {actionText}
             </Button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </article>
+    </div>
   );
 }
