@@ -1,6 +1,6 @@
-import { BiSolidPhotoAlbum } from "react-icons/bi";
-import { FaHome } from "react-icons/fa";
-import { TbCardsFilled } from "react-icons/tb";
+import { BiSolidPhotoAlbum } from 'react-icons/bi';
+import { FaHome } from 'react-icons/fa';
+import { TbCardsFilled } from 'react-icons/tb';
 
 export const navigationItems = [
   {

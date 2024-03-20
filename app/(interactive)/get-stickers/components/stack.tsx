@@ -5,9 +5,9 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRecentStickerPack } from '@/store/recent-sticker-pack';
 import { useStickerPack } from '@/store/sticker-pack-settings';
 import type { StickerPackRule } from '@/types/sticker-pack';
-import { lazy, Suspense, useEffect } from 'react';
-
-const StickerPack = lazy(() => import('./sticker-pack'));
+import { useEffect } from 'react';
+import StickerPack from './sticker-pack';
+import { MAX_STICKERS_PACK } from '@/lib/const';
 
 type Props = {
   rules: StickerPackRule[];
@@ -21,7 +21,7 @@ export default function StickersPackStock({ rules }: Props) {
   const {
     isLocked,
     stickerPackOpen,
-    incrementOpenStickers,
+    addOpenStickerPack,
     lock,
     unlock,
     timer,
@@ -29,7 +29,7 @@ export default function StickersPackStock({ rules }: Props) {
   } = useStickerPack((state) => state);
   const { setAll } = useRecentStickerPack((state) => state);
 
-  const handleOnClick = async (rule: StickerPackRule) => {
+  const handleOnClick = async (rule: StickerPackRule, index: number) => {
     const response = await getNewStickerPack(rule);
 
     if (response.error) {
@@ -42,14 +42,14 @@ export default function StickersPackStock({ rules }: Props) {
 
     if (response.data) {
       setAll(response.data);
-      incrementOpenStickers();
+      addOpenStickerPack(index);
       lock();
       setTimer(TIMER_TIME);
     }
   };
 
   useEffect(() => {
-    if (timer != 0) {
+    if (timer != 0 && stickerPackOpen.length != MAX_STICKERS_PACK) {
       let interval = setInterval(() => {
         if (timer <= 0) {
           unlock();
@@ -60,7 +60,7 @@ export default function StickersPackStock({ rules }: Props) {
       }, INTERVAL_TIME);
       return () => clearInterval(interval);
     }
-  }, [timer, setTimer, unlock]);
+  }, [timer, setTimer, unlock, stickerPackOpen.length]);
 
   useEffect(() => {
     if (timer === 0) {
@@ -72,19 +72,18 @@ export default function StickersPackStock({ rules }: Props) {
     <div className='h-full'>
       <p className='mb-4'>Seleccione un paquete</p>
       <div className='grid h-full grid-cols-1 place-items-center gap-5 md:grid-cols-4 '>
-        <Suspense fallback={<div className='h-full w-full bg-red-500'></div>}>
-          {rules.map((rule, index) => {
-            return (
-              <StickerPack
-                key={index}
-                rule={rule}
-                isOpen={index + 1 <= stickerPackOpen}
-                isLocked={isLocked}
-                onClick={handleOnClick}
-              />
-            );
-          })}
-        </Suspense>
+        {rules.map((rule, index) => {
+          return (
+            <StickerPack
+              key={index}
+              index={index}
+              rule={rule}
+              isOpen={stickerPackOpen.includes(index)}
+              isLocked={isLocked}
+              onClick={handleOnClick}
+            />
+          );
+        })}
       </div>
     </div>
   );

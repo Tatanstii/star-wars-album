@@ -13,7 +13,7 @@ export default function Navbar() {
   return (
     <nav>
       <div className='flex flex-row justify-between rounded-md border border-primary p-5'>
-        <ul className='flex flex-row gap-5'>
+        <ul className='flex flex-col gap-5 md:flex-row'>
           {navigationItems.map((item, index) => (
             <li key={item.link}>
               <Link

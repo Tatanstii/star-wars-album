@@ -3,8 +3,9 @@
 import type { StickerPackRule } from '@/types/sticker-pack';
 import { stickersPackRules } from '@/lib/rules';
 import { getRandomInt } from '@/lib/utils';
+import { MAX_STICKERS_PACK } from '@/lib/const';
 
-const MAX_STICKERS_PACK = 4;
+
 
 export default async function getStickerPackRules(): Promise<
   StickerPackRule[]

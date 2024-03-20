@@ -6,13 +6,15 @@ import Logo from '@/public/assets/images/logo.png';
 import { cn } from '@/lib/utils';
 
 type Props = {
+  index: number;
   isOpen: boolean;
   isLocked: boolean;
   rule: StickerPackRule;
-  onClick: (rule: StickerPackRule) => void;
+  onClick: (rule: StickerPackRule, index: number) => void;
 };
 
 export default function StickerPack({
+  index,
   rule,
   isOpen,
   isLocked,
@@ -20,7 +22,7 @@ export default function StickerPack({
 }: Props) {
   const handleOnClick = () => {
     if (isLocked || isOpen) return;
-    onClick(rule);
+    onClick(rule, index);
   };
 
   return (
