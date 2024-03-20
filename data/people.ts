@@ -1,8 +1,9 @@
 import { providerRequest } from '@/lib/request';
+import { Character } from '@/types/album';
 
 const ENDPOINT = 'people';
 
-export const getPeople = async () => {
+export const getPeople = async (): Promise<Character[]> => {
   const response = await providerRequest(ENDPOINT);
   return response;
 };

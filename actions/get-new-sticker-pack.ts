@@ -1,12 +1,9 @@
 'use server';
 
-import { getFilm } from '@/data/films';
-import { getCharacter } from '@/data/people';
-import {
-  MAX_CHARACTERS_LENGTH,
-  MAX_FILMS_LENGTH,
-  MAX_STARSHIPS_LENGTH,
-} from '@/lib/const';
+import { getFilms } from '@/data/films';
+import { getPeople } from '@/data/people';
+import { getStarships } from '@/data/starships';
+import { EXTRACT_ID_REGEX } from '@/lib/const';
 import { checkIsSpecialStickerPack, getRandomInt } from '@/lib/utils';
 import { Category } from '@/types/album';
 import {
@@ -20,61 +17,52 @@ import {
 
 const ERROR_MESSAGE = 'Error al obtener el paquete de stickers';
 
+const generateStiker = (data: any, category: Category) => {
+  const all = data;
+  const randomItem = getRandomInt(1, data.length);
+
+  const item = all[randomItem];
+  const match = item.url.match(EXTRACT_ID_REGEX);
+  const id = match ? Number(match[1]) : null;
+
+  if (!id) {
+    return {
+      error: ERROR_MESSAGE,
+    };
+  }
+
+  return {
+    id: id,
+    type: checkIsSpecialStickerPack(id, category)
+      ? StickerType.SPECIAL
+      : StickerType.REGULAR,
+    category: category,
+    content: item,
+  };
+};
+
 export default async function getNewStickerPack(rule: StickerPackRule) {
+  let films: FilmSticker[] = [];
+  let characters: CharacterSticker[] = [];
+  let starships: StarshipSticker[] = [];
+
   try {
-    let films: FilmSticker[] = [];
-    let characters: CharacterSticker[] = [];
-    let starships: StarshipSticker[] = [];
-
     if ('films' in rule && typeof rule.films === 'number') {
-      const randomFilmId = getRandomInt(1, MAX_FILMS_LENGTH);
-      const film = await getFilm(randomFilmId);
+      const sticker = await generateStiker(await getFilms(), Category.FILM);
 
-      films = [
-        ...films,
-        {
-          id: randomFilmId,
-          type: checkIsSpecialStickerPack(randomFilmId, Category.FILM)
-            ? StickerType.SPECIAL
-            : StickerType.REGULAR,
-          category: Category.FILM,
-          content: film,
-        },
-      ];
+      films = [...films, sticker as FilmSticker];
     }
 
     for (let i = 0; i < rule.characters; i++) {
-      const randomCharacterId = getRandomInt(1, MAX_CHARACTERS_LENGTH);
-      const character = await getCharacter(randomCharacterId);
+      const sticker = await generateStiker(await getPeople(), Category.CHARACTER);
 
-      characters = [
-        ...characters,
-        {
-          id: randomCharacterId,
-          type: checkIsSpecialStickerPack(randomCharacterId, Category.CHARACTER)
-            ? StickerType.SPECIAL
-            : StickerType.REGULAR,
-          category: Category.CHARACTER,
-          content: character,
-        },
-      ];
+      characters = [...characters, sticker as CharacterSticker];
     }
 
     for (let i = 0; i < rule.starships; i++) {
-      const randomStarshipId = getRandomInt(1, MAX_STARSHIPS_LENGTH);
-      const starship = await getCharacter(randomStarshipId);
+      const sticker = await generateStiker(await getStarships(), Category.STARSHIP);
 
-      starships = [
-        ...starships,
-        {
-          id: randomStarshipId,
-          type: checkIsSpecialStickerPack(randomStarshipId, Category.STARSHIP)
-            ? StickerType.SPECIAL
-            : StickerType.REGULAR,
-          category: Category.STARSHIP,
-          content: starship,
-        },
-      ];
+      starships = [...starships, sticker as StarshipSticker];
     }
 
     return {
@@ -85,8 +73,6 @@ export default async function getNewStickerPack(rule: StickerPackRule) {
       } as StickerPack,
     };
   } catch (error) {
-    console.log(error);
-
     return {
       error: ERROR_MESSAGE,
     };

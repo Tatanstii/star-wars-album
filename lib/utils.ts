@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import {
+  EXTRACT_ID_REGEX,
   MAX_CHARACTER_SPECIAL_STICKER_PACK,
   MAX_FILM_SPECIAL_STICKER_PACK,
   MAX_STARSHIP_SPECIAL_STICKER_PACK,
@@ -36,18 +37,22 @@ export function checkIsSpecialStickerPack(id: number, type: Category) {
 }
 
 export function checkExistSticker(
-  category: Category,
   sticker: CharacterSticker | FilmSticker | StarshipSticker,
   album: Album
 ) {
-  if (category === Category.CHARACTER) {
+  if (sticker.category === Category.CHARACTER) {
     return album.characters.some((item) => item.id === sticker.id);
   }
-  if (category === Category.FILM) {
+  if (sticker.category === Category.FILM) {
     return album.films.some((item) => item.id === sticker.id);
   }
-  if (category === Category.STARSHIP) {
+  if (sticker.category === Category.STARSHIP) {
     return album.starships.some((item) => item.id === sticker.id);
   }
   return false;
 }
+
+export const extractIdFormUrl = (url: string) => {
+  const match = url.match(EXTRACT_ID_REGEX);
+  return match ? Number(match[1]) : null;
+};

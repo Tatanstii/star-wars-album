@@ -1,7 +1,7 @@
 import React from 'react';
 import StickersPackStock from './components/stack';
 import getStickerPackRules from '@/actions/get-sticker-pack-rules';
-import NewStickerPack from '@/app/(interactive)/get-stickers/components/new-sticker-pack';
+import NewStickerPack from '@/app/(interactive)/get-stickers/components/stickers-dialog';
 
 export default async function GetStickersPage() {
   const stickerPackRules = await getStickerPackRules();

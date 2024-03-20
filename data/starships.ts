@@ -1,8 +1,9 @@
 import { providerRequest } from '@/lib/request';
+import { Starship } from '@/types/album';
 
 const ENDPOINT = 'starships';
 
-export const getStarships = async () => {
+export const getStarships = async (): Promise<Starship[]> => {
   const response = await providerRequest(ENDPOINT);
   return response;
 };

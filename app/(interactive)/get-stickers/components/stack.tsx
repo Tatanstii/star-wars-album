@@ -15,14 +15,13 @@ type Props = {
 
 export default function StickersPackStock({ rules }: Props) {
   const { toast } = useToast();
-  const { incrementStickerPackOpen, isLocked, stickerPackOpen } =
-    useStickerPack((state) => state);
-  const { setStickerPack } = useRecentStickerPack((state) => state);
+
+  const { isLocked, stickerPackOpen } = useStickerPack((state) => state);
+  const { setAll } = useRecentStickerPack((state) => state);
 
   const handleOnClick = async (rule: StickerPackRule) => {
     const response = await getNewStickerPack(rule);
 
-    console.log('response', response);
     if (response.error) {
       toast({
         variant: 'destructive',
@@ -33,7 +32,7 @@ export default function StickersPackStock({ rules }: Props) {
 
     if (response.data) {
       startTransition(() => {
-        setStickerPack(response.data);
+        setAll(response.data);
       });
     }
   };
