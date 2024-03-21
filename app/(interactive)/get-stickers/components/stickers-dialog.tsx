@@ -85,7 +85,11 @@ export default function StickersDialog() {
                   )}
                 >
                   <Sticker
-                    id={character.id + character.category.length + character.content.name.length}
+                    id={
+                      character.id +
+                      character.category.length +
+                      character.content.name.length
+                    }
                     stickerType={character.type}
                     stickerCategory={character.category}
                     stickerNumber={character.id}
@@ -113,7 +117,9 @@ export default function StickersDialog() {
                   )}
                 >
                   <Sticker
-                    id={film.id + film.category.length + film.content.title.length}
+                    id={
+                      film.id + film.category.length + film.content.title.length
+                    }
                     stickerType={film.type}
                     stickerCategory={film.category}
                     stickerNumber={film.id}
@@ -135,7 +141,11 @@ export default function StickersDialog() {
               ))}
               {stickerPack.starships.map((starship, index) => (
                 <div
-                  key={starship.id + starship.category.length + starship.content.name.length}
+                  key={
+                    starship.id +
+                    starship.category.length +
+                    starship.content.name.length
+                  }
                   className={cn(
                     'absolute inset-0 z-40 grid h-full w-full place-items-center '
                   )}

@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import Album from '@/components/album';
 import { useAlbum } from '@/store/album';

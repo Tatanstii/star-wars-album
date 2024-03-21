@@ -5,8 +5,6 @@ import { stickersPackRules } from '@/lib/rules';
 import { getRandomInt } from '@/lib/utils';
 import { MAX_STICKERS_PACK } from '@/lib/const';
 
-
-
 export default async function getStickerPackRules(): Promise<
   StickerPackRule[]
 > {

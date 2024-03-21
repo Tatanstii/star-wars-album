@@ -36,7 +36,7 @@ export default function StickersPackStock({ rules }: Props) {
       setAll(response.data);
       addOpenStickerPack(index);
       lock();
-      if (stickerPackOpen.length != MAX_STICKERS_PACK && !interval) {
+      if (stickerPackOpen.length != MAX_STICKERS_PACK - 1 && !interval) {
         startTimer();
       }
     }

@@ -19,7 +19,8 @@ export default function NavLink({ link, children }: Props) {
       className={cn(
         'rounded-md p-2 underline underline-offset-2 transition hover:bg-primary hover:text-gray-900',
         {
-          'bg-primary no-underline text-gray-900 hover:text-gray-600': pathname.includes(link),
+          'bg-primary text-gray-900 no-underline hover:text-gray-600':
+            pathname.includes(link),
         }
       )}
     >

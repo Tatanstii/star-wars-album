@@ -23,7 +23,7 @@ export const useNewStickerPackCounter = create<State & Action>()(
           interval: setInterval(() => {
             if (get().timer <= 0) {
               clearInterval(get().interval as NodeJS.Timeout);
-              set((state) => ({
+              set(() => ({
                 timer: INITIAL_TIMER,
                 interval: null,
               }));
