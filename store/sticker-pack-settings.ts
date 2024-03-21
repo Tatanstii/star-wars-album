@@ -27,7 +27,7 @@ export const useStickerPack = create<State & Action>()(
         })),
     }),
     {
-      name: 'stickerPackSettings',
+      name: 'sticker-pack-settings',
       storage: createJSONStorage(() => localStorage),
     }
   )

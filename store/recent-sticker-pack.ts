@@ -64,7 +64,7 @@ export const useRecentStickerPack = create<State & Action>()(
         set({ stickerPack: { characters: [], films: [], starships: [] } }),
     }),
     {
-      name: 'recentStickerPack',
+      name: 'recent-sticker-Pack',
       storage: createJSONStorage(() => localStorage),
     }
   )

@@ -49,7 +49,10 @@ export default function StickersPackStock({ rules }: Props) {
     if (!interval) {
       unlock();
     }
-  }, [interval, unlock]);
+    if (interval) {
+      lock();
+    }
+  }, [interval, unlock, lock]);
 
   return (
     <div className='h-full'>
