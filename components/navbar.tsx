@@ -5,33 +5,43 @@ import { cn, formatMsToMinutes } from '@/lib/utils';
 import { useNewStickerPackCounter } from '@/store/new-sticker-pack-counter';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import UrlReloadListener from './url-reload-listener';
 import { useEffect } from 'react';
+import { useAppLoaded } from '@/store/app-loaded';
 
 export default function Navbar() {
   const pathname = usePathname();
   const { timer, interval, startTimer, finished } = useNewStickerPackCounter(
     (state) => state
   );
+  const { appLoaded, setAppLoaded } = useAppLoaded((state) => state);
+
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     if (!finished && localStorage.getItem('recentLoaded') === 'true') {
+  //       startTimer();
+  //     }
+  //     const timeout = setTimeout(() => {
+  //       localStorage.removeItem('recentLoaded');
+  //     }, 3000);
+  //     return () => clearTimeout(timeout);
+  //   }
+  // }, [finished, startTimer]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (!finished && localStorage.getItem('recentLoaded') === 'true') {
-        startTimer();
-      }
-      const timeout = setTimeout(() => {
-        localStorage.removeItem('recentLoaded');
-      }, 3000);
-      return () => clearTimeout(timeout);
+    if (interval && appLoaded) {
+      console.log('F useEffect', appLoaded);
+      startTimer();
+      setAppLoaded(false);
     }
-  }, [finished, startTimer]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [interval, appLoaded]);
 
   return (
     <>
       <nav>
         <div className='flex flex-col justify-between gap-5 rounded-md border border-primary p-5 md:flex-row'>
           <ul className='flex flex-col gap-5 md:flex-row'>
-            {homeNavItems.map((item, index) => (
+            {homeNavItems.map((item) => (
               <li key={item.link}>
                 <Link
                   href={item.link}
@@ -54,22 +64,17 @@ export default function Navbar() {
             ))}
           </ul>
           {interval && (
-            <p>
-              Nuevo paquete de láminas en{' '}
-              <span className='ml-1 font-starjedi'>
-                {formatMsToMinutes(timer)}
-              </span>
-            </p>
+            <div>
+              <p>
+                Nuevo paquete de láminas en{' '}
+                <span className='ml-1 font-starjedi'>
+                  {formatMsToMinutes(timer)}
+                </span>
+              </p>
+            </div>
           )}
         </div>
       </nav>
-      <UrlReloadListener
-        callback={() => {
-          if (typeof window !== 'undefined') {
-            localStorage.setItem('recentLoaded', 'true');
-          }
-        }}
-      />
     </>
   );
 }
