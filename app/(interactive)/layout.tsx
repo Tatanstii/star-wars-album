@@ -6,7 +6,7 @@ export default function InteractiveLayot({
   children,
 }: React.PropsWithChildren<{}>) {
   return (
-    <div className='relative px-20 py-10'>
+    <div className='relative p-10 md:px-20 md:py-10'>
       <header>
         <Navbar />
       </header>

@@ -20,7 +20,7 @@ export default function StickerDetails() {
   return (
     <div className='fixed inset-0 z-40 bg-black/70 p-10'>
       <div className='h-full w-full place-items-center md:grid'>
-        <Card className='max-h-[650px] min-w-[400px] max-w-4xl overflow-y-auto'>
+        <Card className='w-full h-full overflow-y-auto'>
           <CardHeader>
             <div className='mb-4 flex flex-row items-center justify-end gap-10'>
               <Button variant='ghost' onClick={removeSticker}>
