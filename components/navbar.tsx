@@ -10,32 +10,29 @@ import { useAppLoaded } from '@/store/app-loaded';
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { timer, interval, startTimer, finished } = useNewStickerPackCounter(
+  const { timer, interval, startTimer } = useNewStickerPackCounter(
     (state) => state
   );
   const { appLoaded, setAppLoaded } = useAppLoaded((state) => state);
 
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     if (!finished && localStorage.getItem('recentLoaded') === 'true') {
-  //       startTimer();
-  //     }
-  //     const timeout = setTimeout(() => {
-  //       localStorage.removeItem('recentLoaded');
-  //     }, 3000);
-  //     return () => clearTimeout(timeout);
-  //   }
-  // }, [finished, startTimer]);
-
   useEffect(() => {
-    if (interval && appLoaded) {
-      console.log('F useEffect', appLoaded);
+    if (appLoaded && interval) {
+      console.log('going to start', { interval, appLoaded });
       startTimer();
       setAppLoaded(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interval, appLoaded]);
 
+  useEffect(() => {
+    if (appLoaded) {
+      const timeout = setTimeout(() => {
+        setAppLoaded(false);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appLoaded]);
   return (
     <>
       <nav>

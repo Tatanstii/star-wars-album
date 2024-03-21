@@ -4,12 +4,10 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 type State = {
   timer: number;
   interval: NodeJS.Timeout | null;
-  finished: boolean;
 };
 
 type Action = {
   startTimer: () => void;
-  setFinished: (finished: boolean) => void;
 };
 
 const INITIAL_TIMER = 60 * 1000;
@@ -20,7 +18,6 @@ export const useNewStickerPackCounter = create<State & Action>()(
     (set, get) => ({
       timer: INITIAL_TIMER,
       interval: null,
-      finished: true,
       startTimer: () =>
         set({
           interval: setInterval(() => {
@@ -29,7 +26,6 @@ export const useNewStickerPackCounter = create<State & Action>()(
               set(() => ({
                 timer: INITIAL_TIMER,
                 interval: null,
-                finished: true,
               }));
               return;
             }
@@ -37,9 +33,7 @@ export const useNewStickerPackCounter = create<State & Action>()(
               timer: state.timer - INTERVAL,
             }));
           }, INTERVAL),
-          finished: false,
         }),
-      setFinished: (finished) => set({ finished }),
     }),
     {
       name: 'new-sticker-pack-counter',

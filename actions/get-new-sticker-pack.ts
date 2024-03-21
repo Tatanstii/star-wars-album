@@ -18,29 +18,30 @@ import {
 const ERROR_MESSAGE =
   'Error al obtener el paquete de láminas, intenta de nuevo.';
 
-const generateSticker = (data: any, category: Category) => {
-  const all = data;
-  const randomItem = getRandomInt(1, data.length);
+const generateSticker = (data: any, category: Category) =>
+  new Promise((resolve, reject) => {
+    const all = data;
+    const randomItem = getRandomInt(1, data.length);
 
-  const item = all[randomItem];
-  const match = item.url.match(EXTRACT_ID_REGEX);
-  const id = match ? Number(match[1]) : null;
+    const item = all[randomItem];
+    const match = item.url.match(EXTRACT_ID_REGEX);
+    const id = match ? Number(match[1]) : null;
 
-  if (!id) {
-    return {
+    if (id) {
+      resolve({
+        id: id,
+        type: checkIsSpecialStickerPack(id, category)
+          ? StickerType.SPECIAL
+          : StickerType.REGULAR,
+        category: category,
+        content: item,
+      });
+    }
+
+    reject({
       error: ERROR_MESSAGE,
-    };
-  }
-
-  return {
-    id: id,
-    type: checkIsSpecialStickerPack(id, category)
-      ? StickerType.SPECIAL
-      : StickerType.REGULAR,
-    category: category,
-    content: item,
-  };
-};
+    });
+  });
 
 export default async function getNewStickerPack(rule: StickerPackRule) {
   let films: FilmSticker[] = [];
