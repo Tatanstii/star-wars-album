@@ -14,13 +14,13 @@ import { GiAlienBug, GiFilmSpool, GiSpaceShuttle } from 'react-icons/gi';
 
 export default function StickerDetails() {
   const { sticker, removeSticker } = useStickerDetails((state) => state);
-  
+
   if (!sticker) return null;
 
   return (
-    <div className='fixed inset-0 z-50 h-full w-full bg-black/80'>
-      <div className='grid h-full w-full place-items-center'>
-        <Card className='min-w-[400px] max-w-4xl'>
+    <div className='fixed inset-0 z-40 bg-black/70 p-10'>
+      <div className='h-full w-full place-items-center md:grid'>
+        <Card className='max-h-[650px] min-w-[400px] max-w-4xl overflow-y-auto'>
           <CardHeader>
             <div className='mb-4 flex flex-row items-center justify-end gap-10'>
               <Button variant='ghost' onClick={removeSticker}>
@@ -52,7 +52,7 @@ export default function StickerDetails() {
                 {sticker.type}
               </Badge>
             </div>
-            <div className='flex flex-row gap-10'>
+            <div className='flex flex-col gap-10 md:flex-row'>
               <div className='grid w-full place-items-center'>
                 {sticker.category === Category.CHARACTER && (
                   <GiAlienBug size={300} className='text-slate-900' />
@@ -66,7 +66,10 @@ export default function StickerDetails() {
               </div>
               <ScrollArea className='h-[400px] w-full rounded-md border p-5'>
                 {Object.entries(sticker.content).map(([key, value]) => (
-                  <div key={key} className='flex flex-row gap-5'>
+                  <div
+                    key={key}
+                    className='flex flex-col gap-2 md:flex-row md:gap-5'
+                  >
                     <p className='font-bold'>{key}</p>
                     <p>{value}</p>
                   </div>

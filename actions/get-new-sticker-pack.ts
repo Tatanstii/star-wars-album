@@ -15,9 +15,10 @@ import {
   StickerType,
 } from '@/types/sticker-pack';
 
-const ERROR_MESSAGE = 'Error al obtener el paquete de stickers';
+const ERROR_MESSAGE =
+  'Error al obtener el paquete de láminas, intenta de nuevo.';
 
-const generateStiker = (data: any, category: Category) => {
+const generateSticker = (data: any, category: Category) => {
   const all = data;
   const randomItem = getRandomInt(1, data.length);
 
@@ -46,23 +47,33 @@ export default async function getNewStickerPack(rule: StickerPackRule) {
   let characters: CharacterSticker[] = [];
   let starships: StarshipSticker[] = [];
 
+  const data = await Promise.all([getFilms(), getPeople(), getStarships()]);
+
+  const allFilms = data[0];
+  const allPeople = data[1];
+  const allStarships = data[2];
+
   try {
     if ('films' in rule && typeof rule.films === 'number') {
-      const sticker = await generateStiker(await getFilms(), Category.FILM);
+      if (allFilms) {
+        const sticker = await generateSticker(allFilms, Category.FILM);
 
-      films = [...films, sticker as FilmSticker];
+        films = [...films, sticker as FilmSticker];
+      }
     }
 
     for (let i = 0; i < rule.characters; i++) {
-      const sticker = await generateStiker(await getPeople(), Category.CHARACTER);
-
-      characters = [...characters, sticker as CharacterSticker];
+      if (allPeople) {
+        const sticker = await generateSticker(allPeople, Category.CHARACTER);
+        characters = [...characters, sticker as CharacterSticker];
+      }
     }
 
     for (let i = 0; i < rule.starships; i++) {
-      const sticker = await generateStiker(await getStarships(), Category.STARSHIP);
-
-      starships = [...starships, sticker as StarshipSticker];
+      if (allStarships) {
+        const sticker = await generateSticker(allStarships, Category.STARSHIP);
+        starships = [...starships, sticker as StarshipSticker];
+      }
     }
 
     return {

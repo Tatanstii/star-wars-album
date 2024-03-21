@@ -2,17 +2,17 @@
 
 import { homeNavItems } from '@/data/nav';
 import { cn, formatMsToMinutes } from '@/lib/utils';
-import { useStickerPack } from '@/store/sticker-pack-settings';
+import { useNewStickerPackCounter } from '@/store/new-sticker-pack-counter';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { timer } = useStickerPack((state) => state);
+  const { timer, interval } = useNewStickerPackCounter((state) => state);
 
   return (
     <nav>
-      <div className='flex flex-row justify-between rounded-md border border-primary p-5'>
+      <div className='flex flex-col justify-between gap-5 rounded-md border border-primary p-5 md:flex-row'>
         <ul className='flex flex-col gap-5 md:flex-row'>
           {homeNavItems.map((item, index) => (
             <li key={item.link}>
@@ -36,9 +36,9 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        {timer != 0 && (
+        {interval && (
           <p>
-            Nuevo paquete de pegatinas en{' '}
+            Nuevo paquete de láminas en{' '}
             <span className='ml-1 font-starjedi'>
               {formatMsToMinutes(timer)}
             </span>

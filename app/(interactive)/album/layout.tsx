@@ -4,7 +4,7 @@ import StickerDetails from './components/sticker-details';
 
 export default function AlbumLayout({ children }: React.PropsWithChildren<{}>) {
   return (
-    <div className='flex flex-col gap-5'>
+    <div className='relative flex flex-col gap-5'>
       <CategoryNav />
       {children}
       <StickerDetails />

@@ -8,28 +8,19 @@ import type { StickerPackRule } from '@/types/sticker-pack';
 import { useEffect } from 'react';
 import StickerPack from './sticker-pack';
 import { MAX_STICKERS_PACK } from '@/lib/const';
-import { nanoid } from 'nanoid';
+import { useNewStickerPackCounter } from '@/store/new-sticker-pack-counter';
 
 type Props = {
   rules: StickerPackRule[];
 };
 
-const INTERVAL_TIME = 1000;
-const TIMER_TIME = 60 * 1000;
-
 export default function StickersPackStock({ rules }: Props) {
   const { toast } = useToast();
-  const {
-    isLocked,
-    stickerPackOpen,
-    addOpenStickerPack,
-    lock,
-    unlock,
-    timer,
-    setTimer,
-  } = useStickerPack((state) => state);
-  const { setAll } = useRecentStickerPack((state) => state);
+  const { isLocked, stickerPackOpen, addOpenStickerPack, lock, unlock } =
+    useStickerPack((state) => state);
 
+  const { setAll } = useRecentStickerPack((state) => state);
+  const { startTimer, interval } = useNewStickerPackCounter((state) => state);
   const handleOnClick = async (rule: StickerPackRule, index: number) => {
     const response = await getNewStickerPack(rule);
 
@@ -45,33 +36,17 @@ export default function StickersPackStock({ rules }: Props) {
       setAll(response.data);
       addOpenStickerPack(index);
       lock();
-      if (stickerPackOpen.length != MAX_STICKERS_PACK) {
-        setTimer(TIMER_TIME);
+      if (stickerPackOpen.length != MAX_STICKERS_PACK && !interval) {
+        startTimer();
       }
     }
   };
 
   useEffect(() => {
-    if (timer != 0 && stickerPackOpen.length != MAX_STICKERS_PACK) {
-      const interval = setInterval(() => {
-        console.log('timer', timer);
-        if (timer <= 0) {
-          unlock();
-          setTimer(0);
-          clearInterval(interval);
-        }
-        setTimer(timer - INTERVAL_TIME);
-      }, INTERVAL_TIME);
-      return () => clearInterval(interval);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timer, stickerPackOpen.length]);
-
-  useEffect(() => {
-    if (timer === 0) {
+    if (!interval) {
       unlock();
     }
-  }, [timer, unlock]);
+  }, [interval, unlock]);
 
   return (
     <div className='h-full'>

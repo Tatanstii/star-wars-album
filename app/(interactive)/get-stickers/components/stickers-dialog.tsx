@@ -73,7 +73,7 @@ export default function StickersDialog() {
   return (
     <>
       {showConfetti && <Confetti />}
-      <div className='absolute inset-0 bg-black/70 p-10'>
+      <div className='fixed inset-0 bg-black/70 p-10'>
         <div className='grid h-full w-full place-items-center'>
           <div className='grid grid-cols-3 gap-5'>
             <div className=''>
@@ -85,7 +85,7 @@ export default function StickersDialog() {
                   )}
                 >
                   <Sticker
-                    id={character.id}
+                    id={character.id + character.category.length + character.content.name.length}
                     stickerType={character.type}
                     stickerCategory={character.category}
                     stickerNumber={character.id}
@@ -113,7 +113,7 @@ export default function StickersDialog() {
                   )}
                 >
                   <Sticker
-                    id={film.id}
+                    id={film.id + film.category.length + film.content.title.length}
                     stickerType={film.type}
                     stickerCategory={film.category}
                     stickerNumber={film.id}
@@ -135,7 +135,7 @@ export default function StickersDialog() {
               ))}
               {stickerPack.starships.map((starship, index) => (
                 <div
-                  key={starship.id}
+                  key={starship.id + starship.category.length + starship.content.name.length}
                   className={cn(
                     'absolute inset-0 z-40 grid h-full w-full place-items-center '
                   )}
