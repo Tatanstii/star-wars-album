@@ -33,6 +33,9 @@ export default function StickersPackStock({ rules }: Props) {
     }
 
     if (response.data) {
+      toast({
+        title: 'Puedes ver tus láminas obtenidas en "Mi álbum"',
+      });
       setAll(response.data);
       addOpenStickerPack(index);
       lock();

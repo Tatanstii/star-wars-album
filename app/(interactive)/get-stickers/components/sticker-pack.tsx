@@ -43,6 +43,7 @@ export default function StickerPack({
           width={200}
           height={200}
           className='aspect-square'
+          priority
         />
         <p className='text-center font-starjedi text-primary'>Album</p>
       </div>
